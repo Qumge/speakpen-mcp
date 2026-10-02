@@ -9,7 +9,7 @@ about pricing last week?" just works.
 - Transport: Streamable HTTP (stateless — POST only, no sessions)
 - Access: **read-only**. Assistants can search and read your completed notes. They can't
   create, change or delete anything, and they never receive your audio.
-- Registry: `app.speakpen/notes`
+- Registry: [`io.github.xnjiang/speakpen-mcp`](https://registry.modelcontextprotocol.io/v0/servers?search=speakpen)
 
 This is a **hosted** server: there is nothing to install or run locally. This repo holds
 its documentation and registry metadata; the server itself runs at speakpen.app.

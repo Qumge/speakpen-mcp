@@ -1,0 +1,52 @@
+name: Publish to MCP Registry
+
+# This server is hosted (https://speakpen.app/mcp); there is no package to install, so
+# server.json is the whole listing. Publish whenever its version differs from what the
+# registry serves as latest. Bump "version" in server.json to republish.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - server.json
+      - .github/workflows/publish-mcp-registry.yml
+  workflow_dispatch:
+
+concurrency:
+  group: publish-mcp-registry
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # mcp-publisher login github-oidc
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Compare server.json with the registry
+        id: cmp
+        run: |
+          set -euo pipefail
+          want=$(jq -r .version server.json)
+          have=$(curl -fsSL "https://registry.modelcontextprotocol.io/v0/servers?search=speakpen" \
+            | jq -r '[.servers[] | select(.server.name == "io.github.xnjiang/speakpen-mcp")
+                      | select(._meta["io.modelcontextprotocol.registry/official"].isLatest == true)
+                      | .server.version] | first // ""')
+          echo "server.json: $want, registry: ${have:-none}"
+          echo "publish=$([ "$want" != "$have" ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
+      - name: Install mcp-publisher
+        if: steps.cmp.outputs.publish == 'true'
+        run: |
+          set -euo pipefail
+          curl -fsSL "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz" | tar xz mcp-publisher
+          ./mcp-publisher --help >/dev/null
+
+      - name: Publish
+        if: steps.cmp.outputs.publish == 'true'
+        run: |
+          set -euo pipefail
+          ./mcp-publisher login github-oidc
+          ./mcp-publisher publish
