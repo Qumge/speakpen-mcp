@@ -1,6 +1,6 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.xnjiang/speakpen-mcp",
+  "name": "io.github.Qumge/speakpen-mcp",
   "title": "SpeakPen: Your Voice Notes",
   "description": "Read-only access to your SpeakPen voice notes: search, read transcripts, list recent ideas.",
   "version": "1.0.0",

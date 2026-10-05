@@ -31,7 +31,7 @@ jobs:
           set -euo pipefail
           want=$(jq -r .version server.json)
           have=$(curl -fsSL "https://registry.modelcontextprotocol.io/v0/servers?search=speakpen" \
-            | jq -r '[.servers[] | select(.server.name == "io.github.xnjiang/speakpen-mcp")
+            | jq -r '[.servers[] | select(.server.name == "io.github.Qumge/speakpen-mcp")
                       | select(._meta["io.modelcontextprotocol.registry/official"].isLatest == true)
                       | .server.version] | first // ""')
           echo "server.json: $want, registry: ${have:-none}"
