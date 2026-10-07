@@ -19,9 +19,11 @@ iPhone app or any browser at https://speakpen.app/app.
 
 ## Connect
 
+Step-by-step setup for each client (also readable by agents): https://speakpen.app/connect
+
 **ChatGPT / Claude.ai / Claude Desktop** — add a custom connector with the URL
 `https://speakpen.app/mcp`. You'll be sent to SpeakPen to sign in and approve read-only
-access. Approved apps are listed under **Settings → Connected apps**, where you can
+access. Approved apps are listed under **Settings → Connections → AI assistants**, where you can
 disconnect them at any time.
 
 **Claude Code** — the same URL works with OAuth:
@@ -30,7 +32,7 @@ disconnect them at any time.
 claude mcp add --transport http speakpen https://speakpen.app/mcp
 ```
 
-or with an API token (create one at https://speakpen.app/app → Settings → API Tokens):
+or with an API token (create one at https://speakpen.app/app → Settings → Connections → Developers):
 
 ```bash
 claude mcp add --transport http speakpen https://speakpen.app/mcp \

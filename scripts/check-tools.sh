@@ -4,7 +4,7 @@
 # and fails on any difference, in either direction.
 #
 # SpeakPen's tools read your own notes, so tools/list needs a token:
-#   SPEAKPEN_TOKEN=<API token from speakpen.app/app → Settings → API Tokens> scripts/check-tools.sh
+#   SPEAKPEN_TOKEN=<API token from speakpen.app/app → Settings → Connections → Developers> scripts/check-tools.sh
 set -euo pipefail
 
 endpoint="${SPEAKPEN_MCP_URL:-https://speakpen.app/mcp}"
