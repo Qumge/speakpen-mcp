@@ -1,1 +1,4 @@
 .worktrees/
+
+# macOS Finder 垃圾文件
+.DS_Store
