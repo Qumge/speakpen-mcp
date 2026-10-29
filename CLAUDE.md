@@ -1,0 +1,3 @@
+# speakpen-mcp
+
+@AGENTS.md
