@@ -1,5 +1,7 @@
 # SpeakPen MCP
 
+[English](README.md) | [简体中文](README.zh-CN.md)
+
 **Your spoken ideas, readable by your AI.** SpeakPen turns what you say into your phone or
 browser into titled, summarized notes. This MCP server lets ChatGPT, Claude, Claude Code,
 Codex, Cursor and any other MCP client search and read those notes — so "what did I say
@@ -14,12 +16,35 @@ about pricing last week?" just works.
 This is a **hosted** server: there is nothing to install or run locally. This repo holds
 its documentation and registry metadata; the server itself runs at speakpen.app.
 
-You need a SpeakPen account (free) with at least one recording:
-iPhone app or any browser at https://speakpen.app/app.
+## Can I use it without a SpeakPen account?
+
+You can read and reuse this repository without an account. **The hosted MCP endpoint
+requires a SpeakPen account and OAuth authorization or a personal API token**, including
+for initialization and `tools/list`. Signing into the SpeakPen website alone does not
+authorize MCP calls; the client must send its bearer token.
+
+| What you want to do | Current requirement |
+|---|---|
+| Read or reuse the MIT-licensed docs and metadata | No SpeakPen account |
+| Connect to the hosted MCP endpoint | Account + OAuth or API token |
+| Search and read useful personal content | Completed notes in that account |
+| Run an independent or local MCP server from this repository | Not available; server implementation is not included |
+| Try guest or bundled demo notes | Not implemented |
+
+A paid SpeakPen subscription is not required just to connect this read-only integration.
+An empty account can connect, but has no notes to return. Recording and other service
+features remain subject to your plan's limits; your AI client may have separate access
+requirements and costs.
+
+[Start with a free SpeakPen account](https://speakpen.app/?utm_source=github-speakpen-mcp&utm_medium=readme)
+→ record an idea in the app or at https://speakpen.app/app → wait for processing to finish
+→ authorize the connector → ask about that note. There is no local executable or
+transcription engine to install from this repository.
 
 ## Connect
 
-Step-by-step setup for each client (also readable by agents): https://speakpen.app/connect
+Step-by-step setup for each client (also readable by agents):
+[SpeakPen connection guide](https://speakpen.app/connect?utm_source=github-speakpen-mcp&utm_medium=readme)
 
 **ChatGPT / Claude.ai / Claude Desktop** — add a custom connector with the URL
 `https://speakpen.app/mcp`. You'll be sent to SpeakPen to sign in and approve read-only
@@ -74,6 +99,10 @@ url = "https://speakpen.app/mcp"
 bearer_token_env_var = "SPEAKPEN_TOKEN"
 ```
 
+Keep real tokens out of shared configuration files, repositories and chat history. Use
+your client's secret or environment-variable support where available. Revocation and
+account authorization still apply when using an API token.
+
 ## Tools
 
 Every tool returns `structuredContent` (JSON) alongside the same JSON as text in
@@ -103,8 +132,12 @@ Limits: 60 tool calls per minute per account.
 
 Your notes can also sync into Obsidian as plain Markdown with the
 [SpeakPen Sync](https://github.com/xnjiang/speakpen-obsidian) plugin — any agent pointed at
-your vault reads them without MCP.
+your vault reads existing local files without MCP. Syncing those notes from SpeakPen
+still requires your SpeakPen account. This repository does not provide a general-purpose
+local-notes MCP server.
 
 ## License
 
-MIT (this documentation). The hosted service is governed by speakpen.app's terms.
+MIT covers this repository's documentation, metadata and scripts. The hosted backend
+implementation is not included here; this is not a self-hostable server distribution.
+The hosted service is governed by [SpeakPen's terms](https://speakpen.app/terms).
