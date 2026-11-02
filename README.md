@@ -2,10 +2,9 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-**Your spoken ideas, readable by your AI.** SpeakPen turns what you say into your phone or
-browser into titled, summarized notes. This MCP server lets ChatGPT, Claude, Claude Code,
-Codex, Cursor and any other MCP client search and read those notes — so "what did I say
-about pricing last week?" just works.
+**Find the thought you recorded. Use it in the work you are doing now.**
+SpeakPen helps you capture spoken ideas as notes. Connect your AI assistant to search
+those notes, read the original words, and turn your own thinking into a plan or draft.
 
 - Endpoint: `https://speakpen.app/mcp`
 - Transport: Streamable HTTP (stateless — POST only, no sessions)
@@ -15,6 +14,21 @@ about pricing last week?" just works.
 
 This is a **hosted** server: there is nothing to install or run locally. This repo holds
 its documentation and registry metadata; the server itself runs at speakpen.app.
+
+## Start here
+
+**[Capture your first idea with SpeakPen →](https://speakpen.app/?utm_source=github-speakpen-mcp&utm_medium=readme&utm_campaign=voice_to_action)**
+
+[Download for iOS](https://apps.apple.com/app/id6743360755) ·
+[Download for Android](https://play.google.com/store/apps/details?id=com.qumge.speakpen) ·
+[Use the web app](https://speakpen.app/app?utm_source=github-speakpen-mcp&utm_medium=readme&utm_campaign=voice_to_action)
+
+1. Record a short thought in SpeakPen and allow time for the note to finish processing.
+2. [Connect your AI assistant](https://speakpen.app/connect?utm_source=github-speakpen-mcp&utm_medium=readme&utm_campaign=voice_to_action) using OAuth or your API token.
+3. Ask: **“Find my notes about pricing and help me decide what to do next.”**
+
+Already have SpeakPen notes? [Go straight to connection setup](#connect).
+You configure the hosted endpoint; you do not need to clone this repository.
 
 ## Can I use it without a SpeakPen account?
 
@@ -36,7 +50,7 @@ An empty account can connect, but has no notes to return. Recording and other se
 features remain subject to your plan's limits; your AI client may have separate access
 requirements and costs.
 
-[Start with a free SpeakPen account](https://speakpen.app/?utm_source=github-speakpen-mcp&utm_medium=readme)
+[Start with a free SpeakPen account](https://speakpen.app/?utm_source=github-speakpen-mcp&utm_medium=readme&utm_campaign=voice_to_action)
 → record an idea in the app or at https://speakpen.app/app → wait for processing to finish
 → authorize the connector → ask about that note. There is no local executable or
 transcription engine to install from this repository.
@@ -44,7 +58,7 @@ transcription engine to install from this repository.
 ## Connect
 
 Step-by-step setup for each client (also readable by agents):
-[SpeakPen connection guide](https://speakpen.app/connect?utm_source=github-speakpen-mcp&utm_medium=readme)
+[SpeakPen connection guide](https://speakpen.app/connect?utm_source=github-speakpen-mcp&utm_medium=readme&utm_campaign=voice_to_action)
 
 **ChatGPT / Claude.ai / Claude Desktop** — add a custom connector with the URL
 `https://speakpen.app/mcp`. You'll be sent to SpeakPen to sign in and approve read-only
@@ -128,10 +142,24 @@ Limits: 60 tool calls per minute per account.
 - "Find my notes about pricing and summarize where I landed"
 - "List everything I recorded yesterday and turn it into a to-do list"
 
+### Processing states
+
+Readable text and a finished AI summary are separate facts. Native notes may expose
+`metadata.transcript_status` and `metadata.summary_status` through `fetch`. A summary that
+is pending or failed must not be described as finished. A missing status is unknown for
+older notes; it is not a guarantee of summary completion. Tool errors are not successful
+empty search results. The original text remains the source to check.
+
+## Choose the integration that fits your workflow
+
+- **This MCP connection:** give a compatible AI client read-only access to your hosted notes.
+- **[SpeakPen Skill](https://github.com/Qumge/speakpen-skill):** add a reusable agent workflow for finding, reading and citing those notes. Optional when your client already uses MCP.
+- **[SpeakPen Sync for Obsidian](https://github.com/Qumge/speakpen-obsidian):** keep notes as ordinary Markdown in your vault.
+
 ## Also in your Obsidian vault
 
 Your notes can also sync into Obsidian as plain Markdown with the
-[SpeakPen Sync](https://github.com/xnjiang/speakpen-obsidian) plugin — any agent pointed at
+[SpeakPen Sync](https://github.com/Qumge/speakpen-obsidian) plugin — any agent pointed at
 your vault reads existing local files without MCP. Syncing those notes from SpeakPen
 still requires your SpeakPen account. This repository does not provide a general-purpose
 local-notes MCP server.
